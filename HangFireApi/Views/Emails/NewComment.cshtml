@@ -1,0 +1,10 @@
+﻿@model Hangfire.Mailer.Models.NewCommentEmail
+要：@Model.To
+来源：mailer@example.com
+主题：新发布的注释
+
+你好，
+有一个从 @Model.UserName 一个新评论：
+
+@Model.Comment
+
