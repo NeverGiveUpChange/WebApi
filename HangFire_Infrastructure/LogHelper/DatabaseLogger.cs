@@ -40,20 +40,21 @@ namespace HangFire_Infrastructure.LogHelper
             {
                 parameters.AppendLine(param.ParameterName + " " + param.DbType + " = " + param.Value);
             }
-     
+
             if (interceptionContext.Exception != null)
             {
-               
+
                 //记录错误sql
-                Log.Error(interceptionContext.Exception,Log._logDatabaseError);
+                Log.Error(interceptionContext.Exception, Log._logDatabaseError);
             }
             else if (duration.TotalSeconds > 1)
             {
-         
-                Log.Info(command.CommandText,Log._logDatabaseTimeout);
+
+                Log.Info(command.CommandText, Log._logDatabaseTimeout);
                 //记录超时sql
             }
-            else {
+            else
+            {
                 //不对正常sql记录
             }
 
