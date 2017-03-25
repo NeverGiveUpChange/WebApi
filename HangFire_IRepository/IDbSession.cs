@@ -9,10 +9,14 @@ namespace HangFire_IRepository
    public interface IDbSession
     {
         /// <summary>
+        /// 是否立即提交数据库
+        /// </summary>
+        bool IsNotSubmit { get; set; }
+        /// <summary>
         /// 将当前操作提交到数据库
         /// </summary>
         /// <returns></returns>
-        int SaveChanges();
+        int? SaveChanges();
 
         /// <summary>
         /// 执行sql增删改

@@ -17,6 +17,7 @@ namespace HangFire_Service
         {
             _dbSession = dbSession;
             _currentRepository = currentRepository;
+         
         }
      public   T Add(T entity)
        {
