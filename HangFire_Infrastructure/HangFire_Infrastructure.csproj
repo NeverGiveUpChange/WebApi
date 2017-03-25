@@ -33,6 +33,9 @@
     <Reference Include="Commons">
       <HintPath>..\packages\MemCached\Commons.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\MemCached\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -84,6 +87,7 @@
     <Compile Include="CacheHelper\RedisCacheHelper\RedisStringCache.cs" />
     <Compile Include="CustomAttributeClassLibrary\CustomExceptionAttribute.cs" />
     <Compile Include="CustomAttributeClassLibrary\CustomRequestAuthorizeAttribute.cs" />
+    <Compile Include="LogHelper\DatabaseLogger.cs" />
     <Compile Include="LogHelper\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
