@@ -43,14 +43,14 @@ namespace HangFire_Infrastructure.LogHelper
      
             if (interceptionContext.Exception != null)
             {
-                Log.LogError = log4net.LogManager.GetLogger("DatabaseError");
+               
                 //记录错误sql
-                Log.Error(interceptionContext.Exception);
+                Log.Error(interceptionContext.Exception,Log._logDatabaseError);
             }
             else if (duration.TotalSeconds > 1)
             {
-                Log.LogInfo = log4net.LogManager.GetLogger("DatabaseTimeoutInfo");
-                Log.Info(command.CommandText);
+         
+                Log.Info(command.CommandText,Log._logDatabaseTimeout);
                 //记录超时sql
             }
             else {

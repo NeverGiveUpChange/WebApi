@@ -9,20 +9,18 @@ namespace HangFire_Infrastructure.LogHelper
 {
     public class Log
     {
-        private static ILog _logInfo = log4net.LogManager.GetLogger("Info");
-        private static ILog _LogError = log4net.LogManager.GetLogger("Error");
-
-        public static ILog LogInfo { get => _logInfo; set => _logInfo = value; }
-        public static ILog LogError { get => _LogError; set => _LogError = value; }
-
-        public static void Info(string message)
+        public static ILog _logInfo = LogManager.GetLogger("Info");
+        public static ILog _LogError = LogManager.GetLogger("Error");
+        public  static ILog  _logDatabaseTimeout = LogManager.GetLogger("DatabaseTimeoutInfo");
+        public static ILog _logDatabaseError = LogManager.GetLogger("DatabaseError");
+        public static void Info(string message,ILog  logInfo)
         {
-            LogInfo.Info(message);
+            logInfo.Info(message);
         }
-        public static void Error(Exception ex)
+        public static void Error(Exception ex,ILog logError)
         {
 
-            LogError.Error(ex.Message.ToString() + "\r\n" + ex.Source.ToString() + "\r\n" + ex.TargetSite == null ? "" : ex.TargetSite.ToString() + "\r\n" + ex.StackTrace.ToString());
+            logError.Error(ex.Message.ToString() + "\r\n" + ex.Source.ToString() + "\r\n" + ex.TargetSite == null ? "" : ex.TargetSite.ToString() + "\r\n" + ex.StackTrace.ToString());
         }
     }
 }
