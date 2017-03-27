@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -45,12 +46,12 @@ namespace HangFire_Infrastructure.LogHelper
             {
 
                 //记录错误sql
-                Log.Error(interceptionContext.Exception, Log._logDatabaseError);
+                Log.Error(interceptionContext.Exception, Log.LogDatabaseError);
             }
             else if (duration.TotalSeconds > 1)
             {
 
-                Log.Info(command.CommandText, Log._logDatabaseTimeout);
+                Log.Info(command.CommandText, Log.LogDatabaseTimeout);
                 //记录超时sql
             }
             else
@@ -59,6 +60,7 @@ namespace HangFire_Infrastructure.LogHelper
             }
 
         }
+        #region  执行增删改
         public void NonQueryExecuted(DbCommand command, DbCommandInterceptionContext<int> interceptionContext)
         {
             LogDatabase(command, interceptionContext);
@@ -69,15 +71,17 @@ namespace HangFire_Infrastructure.LogHelper
             OnStart(command);
         }
 
+
+        #endregion
+        #region 执行查询
+        public void ReaderExecuting(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
+        {
+            OnStart(command);
+        }
         public void ReaderExecuted(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
         {
 
             LogDatabase(command, interceptionContext);
-        }
-
-        public void ReaderExecuting(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
-        {
-            OnStart(command);
         }
         public void ScalarExecuted(DbCommand command, DbCommandInterceptionContext<object> interceptionContext)
         {
@@ -89,5 +93,8 @@ namespace HangFire_Infrastructure.LogHelper
 
             OnStart(command);
         }
+        #endregion
+
+
     }
 }

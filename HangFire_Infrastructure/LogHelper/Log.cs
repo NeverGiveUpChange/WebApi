@@ -9,10 +9,15 @@ namespace HangFire_Infrastructure.LogHelper
 {
     public class Log
     {
-        public static ILog _logInfo = LogManager.GetLogger("Info");
-        public static ILog _LogError = LogManager.GetLogger("Error");
-        public  static ILog  _logDatabaseTimeout = LogManager.GetLogger("DatabaseTimeoutInfo");
-        public static ILog _logDatabaseError = LogManager.GetLogger("DatabaseError");
+        private static ILog _logInfo =LogManager.GetLogger("Info");
+        private static ILog _LogError = LogManager.GetLogger("Error");
+        private  static ILog  _logDatabaseTimeout = LogManager.GetLogger("DatabaseTimeoutInfo");
+        private static ILog _logDatabaseError = LogManager.GetLogger("DatabaseError");
+        public static ILog LogInfo { get => _logInfo; private set => _logInfo = value; }
+        public static ILog LogError { get => _LogError; private set => _LogError = value; }
+        public static ILog LogDatabaseTimeout { get => _logDatabaseTimeout; private set => _logDatabaseTimeout = value; }
+        public static ILog LogDatabaseError { get => _logDatabaseError; private set => _logDatabaseError = value; }
+
         public static void Info(string message,ILog  logInfo)
         {
             logInfo.Info(message);
