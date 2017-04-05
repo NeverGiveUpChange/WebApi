@@ -14,7 +14,7 @@ namespace HangFire_Infrastructure.LogHelper
     /// <summary>
     /// 实现Aop 对Ef执行的sql记录
     /// </summary>
-    public class DatabaseLogger : IDbCommandInterceptor
+    public class DataBaseLogger : IDbCommandInterceptor
     {
         static readonly ConcurrentDictionary<DbCommand, DateTime> MStartTime = new ConcurrentDictionary<DbCommand, DateTime>();
         private static void OnStart(DbCommand command)

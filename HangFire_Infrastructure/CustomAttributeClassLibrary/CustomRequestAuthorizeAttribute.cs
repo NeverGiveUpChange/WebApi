@@ -1,20 +1,8 @@
 ﻿using HangFire_Common;
-using HangFire_Infrastructure.CacheHelper;
-using HangFire_Infrastructure.CacheHelper.RedisCacheHelper;
-using HangFire_ViewModel;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
 
 namespace HangFire_Infrastructure.CustomAttributeClassLibrary
 {

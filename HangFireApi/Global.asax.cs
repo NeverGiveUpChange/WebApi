@@ -23,7 +23,7 @@ namespace HangFireApi
             AutoFacConfig.BuiderIocContainer();
             GlobalConfiguration.Configuration.Filters.Add(new CustomExceptionAttribute());
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(Server.MapPath("/Configs/log4net.config")));
-            DbInterception.Add(new DatabaseLogger());
+            DbInterception.Add(new DataBaseLogger());
             CustomExceptionAttribute.Dequeue<Exception>(x => { Log.Error(x, Log.LogError); });
 
         }
