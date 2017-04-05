@@ -42,7 +42,7 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
         /// <summary>
         /// 入队
         /// </summary>
-        private void Enqueue(Exception ex)
+        private  void Enqueue(Exception ex)
         {
             cacheClient.Set<Exception>(key, ex);
         }

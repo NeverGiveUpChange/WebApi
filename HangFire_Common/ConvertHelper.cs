@@ -209,6 +209,10 @@ namespace HangFire_Common
                 return result;
             return null;
         }
+        public static long ConvertToTimeStmap(DateTime dt)
+        {
+            return (dt.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
+        }
 
         #endregion
 

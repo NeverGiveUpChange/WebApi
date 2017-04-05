@@ -44,7 +44,7 @@ namespace HangFire_Infrastructure.LogHelper
 
             if (interceptionContext.Exception != null)
             {
-
+                
                 //记录错误sql
                 Log.Error(interceptionContext.Exception, Log.LogDatabaseError);
             }

@@ -12,7 +12,6 @@ namespace HangFireApi.Controllers
  
     public class BaseApiController : ApiController
     {
-        public BaseApiController()
-        { }
+       
     }
 }

@@ -38,16 +38,16 @@ namespace HangFireApi.Controllers
        /// <returns></returns>
         [HttpPost]
         
-        public HttpResponseMessage Register([FromBody]Temp t)
+        public HttpResponseMessage Register()
         {
             var responseMassage = CommonHelper.CreateResponseData(-10004, "注册失败");
-            var account = _accountService.Add(new Account { UserName = t.UserName, PassWord = t.PassWord.ToMD5Hash(), CreateTime = DateTime.Now, UpdateTime = DateTime.Now, Deleted = false, });
-            if (account.Id > 0)
-            {
-                responseMassage.Data = account.Id;
-                responseMassage.StatusCode = 1;
-                responseMassage.Message = "注册成功";
-            }
+            //var account = _accountService.Add(new Account { UserName = t.UserName, PassWord = t.PassWord.ToMD5Hash(), CreateTime = DateTime.Now, UpdateTime = DateTime.Now, Deleted = false, });
+            //if (account.Id > 0)
+            //{
+            //    responseMassage.Data = account.Id;
+            //    responseMassage.StatusCode = 1;
+            //    responseMassage.Message = "注册成功";
+            //}
             
             return responseMassage.ToHttpResponseMessage();
         }
@@ -79,9 +79,6 @@ namespace HangFireApi.Controllers
                     {
                         responseMessage.StatusCode = 1;
                         responseMessage.Message = "登陆成功";
-                        var authInfo = new AuthorizeInfo() { UserId = account.Id, Expiry = expiry, Ticket =CommonHelper.CreateTicket(account.Id,account.UserName)};
-                        _cacheClient.Set<AuthorizeInfo>(authInfo.Ticket, authInfo, TimeSpan.FromMinutes(expiry));
-                        responseMessage.Data = authInfo.Ticket;
                     }
                 }
             }
