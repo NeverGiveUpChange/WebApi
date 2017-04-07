@@ -24,7 +24,7 @@ namespace HangFireApi
             GlobalConfiguration.Configuration.Filters.Add(new CustomExceptionAttribute());
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(Server.MapPath("/Configs/log4net.config")));
             DbInterception.Add(new DataBaseLogger());
-            CustomExceptionAttribute.Dequeue<Exception>(x => { Log.Error(x, Log.LogError); });
+            CustomExceptionAttribute.Dequeue<Exception>(x => { Log.Error(x, Log.LogError); }); 
 
         }
     }

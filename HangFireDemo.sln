@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFireApi", "HangFireApi\HangFireApi.csproj", "{AE15163D-A436-4C78-A981-F04E1447A6E7}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFire_IRepository", "HangFire_IRepository\HangFire_IRepository.csproj", "{295E5E89-F12B-48D7-A0B5-94659CF07033}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFire_Repository", "HangFire_Repository\HangFire_Repository.csproj", "{32AD4F16-7724-439C-AE57-C227B9D4AD08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFire_FluentScheduler", "HangFire_FluentScheduler\HangFire_FluentScheduler.csproj", "{44409314-45AA-42AD-A3F7-1C42FF247244}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{32AD4F16-7724-439C-AE57-C227B9D4AD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32AD4F16-7724-439C-AE57-C227B9D4AD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32AD4F16-7724-439C-AE57-C227B9D4AD08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44409314-45AA-42AD-A3F7-1C42FF247244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44409314-45AA-42AD-A3F7-1C42FF247244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44409314-45AA-42AD-A3F7-1C42FF247244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44409314-45AA-42AD-A3F7-1C42FF247244}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
