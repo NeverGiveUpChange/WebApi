@@ -25,7 +25,7 @@ namespace HangFire_Infrastructure.LogHelper
         public static void Error(Exception ex,ILog logError)
         {
 
-            logError.Error(ex.Message.ToString() + "\r\n" + ex.Source.ToString() + "\r\n" + ex.TargetSite == null ? "" : ex.TargetSite.ToString() + "\r\n" + ex.StackTrace.ToString());
+            logError.Error(ex.Message.ToString() + "\r\n" + ex.Source.ToString() + "\r\n" + (ex.TargetSite == null ? "" : ex.TargetSite.ToString()) + "\r\n" + ex.StackTrace.ToString());
         }
     }
 }

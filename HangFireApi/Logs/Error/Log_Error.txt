@@ -1,72 +1,26 @@
-记录时间：2017-01-16 21:02:18,619 线程ID:[6] 日志级别：ERROR 出错类：Error property:[(null)] - 错误描述：尝试除以零。
-HangFireApi
+记录时间：2017-04-08 10:29:31,291 线程ID:[11] 日志级别：ERROR 出错类：Error property:[(null)] - 错误描述：未将对象引用设置到对象的实例。
+HangFire_Infrastructure
 
-   在 HangFireApi.Controllers.AccountController.Login(String userName, String passWord) 位置 D:\MyVisualStudioDemo\HangFireDemo\HangFireApi\Controllers\AccountController.cs:行号 70
-   在 lambda_method(Closure , Object , Object[] )
-   在 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
-   在 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.Execute(Object instance, Object[] arguments)
-   在 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+   在 HangFire_Infrastructure.CustomAttributeClassLibrary.CustomRequestAuthorizeAttribute.OnAuthorization(HttpActionContext actionContext) 位置 D:\GitHub\HangFireDemo\HangFire_Infrastructure\CustomAttributeClassLibrary\CustomRequestAuthorizeAttribute.cs:行号 35
+   在 System.Web.Http.Filters.AuthorizationFilterAttribute.OnAuthorizationAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
 --- 引发异常的上一位置中堆栈跟踪的末尾 ---
    在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   在 System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+   在 System.Web.Http.Filters.AuthorizationFilterAttribute.<ExecuteAuthorizationFilterAsyncCore>d__2.MoveNext()
 --- 引发异常的上一位置中堆栈跟踪的末尾 ---
    在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   在 System.Web.Http.Filters.ActionFilterAttribute.<CallOnActionExecutedAsync>d__5.MoveNext()
---- 引发异常的上一位置中堆栈跟踪的末尾 ---
-   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-   在 System.Web.Http.Filters.ActionFilterAttribute.<CallOnActionExecutedAsync>d__5.MoveNext()
---- 引发异常的上一位置中堆栈跟踪的末尾 ---
-   在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   在 System.Web.Http.Filters.ActionFilterAttribute.<ExecuteActionFilterAsyncCore>d__0.MoveNext()
---- 引发异常的上一位置中堆栈跟踪的末尾 ---
-   在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   在 System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
---- 引发异常的上一位置中堆栈跟踪的末尾 ---
-   在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
    在 System.Web.Http.Controllers.ExceptionFilterResult.<ExecuteAsync>d__0.MoveNext()
-记录时间：2017-01-16 21:02:19,229 线程ID:[6] 日志级别：ERROR 出错类：Error property:[(null)] - 错误描述：尝试除以零。
-HangFireApi
+记录时间：2017-04-08 10:29:31,316 线程ID:[11] 日志级别：ERROR 出错类：Error property:[(null)] - 错误描述：未将对象引用设置到对象的实例。
+HangFire_Infrastructure
 
-   在 HangFireApi.Controllers.AccountController.Login(String userName, String passWord) 位置 D:\MyVisualStudioDemo\HangFireDemo\HangFireApi\Controllers\AccountController.cs:行号 70
-   在 lambda_method(Closure , Object , Object[] )
-   在 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass10.<GetExecutor>b__9(Object instance, Object[] methodParameters)
-   在 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.Execute(Object instance, Object[] arguments)
-   在 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+   在 HangFire_Infrastructure.CustomAttributeClassLibrary.CustomRequestAuthorizeAttribute.OnAuthorization(HttpActionContext actionContext) 位置 D:\GitHub\HangFireDemo\HangFire_Infrastructure\CustomAttributeClassLibrary\CustomRequestAuthorizeAttribute.cs:行号 35
+   在 System.Web.Http.Filters.AuthorizationFilterAttribute.OnAuthorizationAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
 --- 引发异常的上一位置中堆栈跟踪的末尾 ---
    在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   在 System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+   在 System.Web.Http.Filters.AuthorizationFilterAttribute.<ExecuteAuthorizationFilterAsyncCore>d__2.MoveNext()
 --- 引发异常的上一位置中堆栈跟踪的末尾 ---
    在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   在 System.Web.Http.Filters.ActionFilterAttribute.<CallOnActionExecutedAsync>d__5.MoveNext()
---- 引发异常的上一位置中堆栈跟踪的末尾 ---
-   在 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-   在 System.Web.Http.Filters.ActionFilterAttribute.<CallOnActionExecutedAsync>d__5.MoveNext()
---- 引发异常的上一位置中堆栈跟踪的末尾 ---
-   在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   在 System.Web.Http.Filters.ActionFilterAttribute.<ExecuteActionFilterAsyncCore>d__0.MoveNext()
---- 引发异常的上一位置中堆栈跟踪的末尾 ---
-   在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   在 System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
---- 引发异常的上一位置中堆栈跟踪的末尾 ---
-   在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   在 System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
    在 System.Web.Http.Controllers.ExceptionFilterResult.<ExecuteAsync>d__0.MoveNext()

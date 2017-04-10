@@ -1,6 +1,7 @@
 ﻿using HangFire_Common;
 using System;
 using System.Linq;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
@@ -24,7 +25,7 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
                         HandleUnauthorizedRequest(actionContext);
                     }
                 }
-                catch
+                catch(Exception  ex)
                 {
                     HandleUnauthorizedRequest(actionContext);
 
@@ -60,7 +61,13 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
             if (parameterArray.Length < 3 || string.IsNullOrWhiteSpace(parameterArray[0]) || string.IsNullOrWhiteSpace(parameterArray[1]) || string.IsNullOrWhiteSpace(parameterArray[2])) return null;
             else
             {
-                parameter = string.Format("{0}{1}{2}", "{", parameter.Replace(" ", ","), "}");
+                var sb = new StringBuilder("{");
+                for (int i = 0; i < parameterArray.Length; i++)
+                {
+                    var item = parameterArray[i].Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+                    sb.Append("\"" + item[0] + "\"").Append(":").Append("\"" + item[1] + "\"").Append(",");
+                }
+                parameter = sb.ToString().Substring(0, sb.ToString().Length - 1) + "}";
                 return parameter.ConvertObj<AuthorizationInfo>();
             }
 

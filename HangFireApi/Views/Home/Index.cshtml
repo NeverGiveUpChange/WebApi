@@ -26,6 +26,8 @@
 </div>
 <script>
     $(function () {
+        var a = "1,2,3,4,";
+        var b = a.substr(0, a.Length - 1)
     $.ajax({
         type: "post",
         url: "http://localhost:1043/api/Account/Register",
