@@ -18,7 +18,7 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
         public override void OnException(HttpActionExecutedContext actionExecutedContext)//为什么出现异常会执行两次，是否是引发redis异常的原因
         {
             if (actionExecutedContext == null) { return; }
-            Enqueue(actionExecutedContext.Exception);//使用redisList当作队列记录日志
+            EnqueueAsync(actionExecutedContext.Exception);//使用redisList当作队列记录日志
             var response = new HttpResponseMessage();
             if (actionExecutedContext.Exception is NotImplementedException)
             {
@@ -42,9 +42,9 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
         /// <summary>
         /// 入队
         /// </summary>
-        private  void Enqueue(Exception ex)
+        private async  Task EnqueueAsync(Exception ex)
         {
-            cacheClient.Set<Exception>(key, ex);
+          await  cacheClient.SetAsync<Exception>(key, ex);
         }
         /// <summary>
         /// 出队
