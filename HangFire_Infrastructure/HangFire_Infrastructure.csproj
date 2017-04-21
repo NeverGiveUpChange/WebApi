@@ -85,6 +85,7 @@
     <Compile Include="CacheHelper\RedisCacheHelper\RedisHashCache.cs" />
     <Compile Include="CacheHelper\RedisCacheHelper\RedisListCache.cs" />
     <Compile Include="CacheHelper\RedisCacheHelper\RedisStringCache.cs" />
+    <Compile Include="CacheHelper\RedisCacheHelper\RedisZSetCache.cs" />
     <Compile Include="CustomAttributeClassLibrary\CustomExceptionAttribute.cs" />
     <Compile Include="CustomAttributeClassLibrary\CustomRequestAuthorizeAttribute.cs" />
     <Compile Include="LogHelper\DatabaseLogger.cs" />

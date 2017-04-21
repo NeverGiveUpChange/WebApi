@@ -224,6 +224,42 @@ namespace HangFire_Infrastructure.CacheHelper
         {
             return this._cache.GetListLength(key);
         }
+        /// <summary>
+        /// 添加sortedset项
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key">redisKey</param>
+        /// <param name="value">值</param>
+        /// <param name="score">排序分</param>
+        /// <param name="expiry"></param>
+        /// <returns></returns>
+        public bool Set<T>(string key, T value, double score, TimeSpan? expiry = default(TimeSpan?))
+        {
+            return this._cache.Set<T>(key, value, score);
+        }
+        /// <summary>
+        /// 获取有序列中的项集合根据分的范围
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key">redisKey</param>
+        /// <param name="startScore">开始分</param>
+        /// <param name="endScore">结束分</param>
+        /// <returns></returns>
+        public List<T> Get<T>(string key, double startScore, double endScore)
+        {
+            return this._cache.Get<T>(key, startScore, endScore);
+        }
+        /// <summary>
+        /// 删除已被消费的所有项
+        /// </summary>
+        /// <param name="key">redisKey</param>
+        /// <param name="startScore">开始分</param>
+        /// <param name="endScore">结束分</param>
+        /// <returns></returns>
+        public long Remove(string key, double startScore, double endScore)
+        {
+            return this._cache.Remove(key, startScore, endScore);
+        }
 
     }
 }

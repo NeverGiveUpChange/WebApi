@@ -156,5 +156,35 @@ namespace HangFire_Infrastructure.CacheHelper
        /// <param name="key"></param>
        /// <returns></returns>
        long GetListLength(string key);
+        /// <summary>
+        /// 添加sortedset
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key">redisKey</param>
+        /// <param name="value">值</param>
+        /// <param name="score">排序分</param>
+        /// <param name="expiry"></param>
+        /// <returns></returns>
+        bool Set<T>(string key, T value, double score, TimeSpan? expiry = default(TimeSpan?));
+        /// <summary>
+        /// 获取sortedset根据开始分，和结束分
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key">redisKey</param>
+        /// <param name="startScore">开始分</param>
+        /// <param name="endScore">结束分</param>
+        /// <returns></returns>
+
+        List<T> Get<T>(string key, double startScore, double endScore);
+        /// <summary>
+        /// 移除被消费的项
+        /// </summary>
+        /// <param name="key">redisKey</param>
+        /// <param name="startScore">开始分</param>
+        /// <param name="endScore">结束分</param>
+        /// <returns></returns>
+
+        long Remove(string key, double startScore, double endScore);
+      
     }
 }

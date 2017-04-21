@@ -87,21 +87,27 @@ namespace HangFire_Infrastructure.CacheHelper
         {
             throw new NotImplementedException();
         }
-
-
         public virtual bool Set<T>(string key, T value,string filePath, TimeSpan? expiry = default(TimeSpan?))
         {
             throw new NotImplementedException();
         }
-
-
         public virtual  bool KeyExpire(string key, TimeSpan? expiry = default(TimeSpan?))
         {
             throw new NotImplementedException();
         }
-
-
         public virtual long GetListLength(string key)
+        {
+            throw new NotImplementedException();
+        }
+        public virtual bool Set<T>(string key, T value, double score, TimeSpan? expiry = default(TimeSpan?))
+        {
+            throw new NotImplementedException();
+        }
+        public virtual List<T> Get<T>(string key, double startScore, double endScore)
+        {
+            throw new NotImplementedException();
+        }
+        public virtual long Remove(string key, double startScore, double endScore)
         {
             throw new NotImplementedException();
         }

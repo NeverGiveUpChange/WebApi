@@ -26,6 +26,7 @@ namespace HangFire_Infrastructure.CacheHelper
         {
             return JsonConvert.DeserializeObject<T>(value);
         }
+ 
         public static T ConvertObj<T>(string value)
         {
             return JsonConvert.DeserializeObject<T>(value);
