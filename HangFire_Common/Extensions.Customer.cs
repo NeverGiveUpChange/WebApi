@@ -13,6 +13,15 @@ namespace HangFire_Common
 {
   public static  class Extensions
     {
+     
+        public static byte[] StringToBytes(this string str,string encoding)
+        {
+           return Encoding.GetEncoding(encoding).GetBytes(str);
+        }
+        public static string BytesToString(this byte[] bytes, string encoding)
+        {
+            return Encoding.GetEncoding(encoding).GetString(bytes)
+        }
       /// <summary>
       /// 序列化
       /// </summary>

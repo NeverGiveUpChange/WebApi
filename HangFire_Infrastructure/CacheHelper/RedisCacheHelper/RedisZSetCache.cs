@@ -28,6 +28,7 @@ namespace HangFire_Infrastructure.CacheHelper.RedisCacheHelper
                 RedisConnectionManager.Instance :
                 RedisConnectionManager.GetConnectionMultiplexer(readWriteHosts);
             _db = _conn.GetDatabase(dbNum);
+            
         }
         #endregion 构造函数
         public override bool Set<T>(string key, T value, double score, TimeSpan? expiry = default(TimeSpan?))
@@ -45,11 +46,7 @@ namespace HangFire_Infrastructure.CacheHelper.RedisCacheHelper
         }
         public override long Remove(string key, double startScore, double endScore)
         {
-
             return _db.SortedSetRemoveRangeByScore(key, startScore, endScore);
-
-
-
         }
     }
 }
