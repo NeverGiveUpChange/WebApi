@@ -20,7 +20,7 @@ namespace HangFire_Common
         }
         public static string BytesToString(this byte[] bytes, string encoding)
         {
-            return Encoding.GetEncoding(encoding).GetString(bytes)
+            return Encoding.GetEncoding(encoding).GetString(bytes);
         }
       /// <summary>
       /// 序列化
