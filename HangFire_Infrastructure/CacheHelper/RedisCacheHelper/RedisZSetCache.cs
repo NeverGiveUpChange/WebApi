@@ -19,7 +19,7 @@ namespace HangFire_Infrastructure.CacheHelper.RedisCacheHelper
 
         public RedisZSetCache(int dbNum = 0)
             : this(dbNum, null)
-        {
+        {      
         }
         public RedisZSetCache(int dbNum, string readWriteHosts)
         {
