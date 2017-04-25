@@ -98,6 +98,7 @@ namespace HangFire_RabbitMq.Client
        
             iModel.ExchangeDeclare(exchange, type, durable, autoDelete, arguments);
         }
+
         #endregion
 
         #region 队列声明
