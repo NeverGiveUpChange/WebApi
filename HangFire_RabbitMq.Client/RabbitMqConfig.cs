@@ -51,9 +51,9 @@ namespace HangFire_RabbitMq.Client
     }
     public enum ExchangeTypeEnum
     {
-        Direct = 1,
-        Fanout = 2,
-        Topic = 3
+        Direct ,
+        Fanout ,
+        Topic 
     }
 
 
