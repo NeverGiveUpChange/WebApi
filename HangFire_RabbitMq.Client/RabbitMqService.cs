@@ -289,7 +289,7 @@ namespace HangFire_RabbitMq.Client
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body;
-                var msgStr = body.BytesToString("UTF8");
+                var msgStr = body.BytesToString();
                 var msg = msgStr.ConvertObj<T>();
                 try
                 {
@@ -344,7 +344,7 @@ namespace HangFire_RabbitMq.Client
             if (ObjectExtension.IsNull(result))
                 return;
 
-            var msg =result.Body.BytesToString("UTF8").ConvertObj<T>();
+            var msg =result.Body.BytesToString().ConvertObj<T>();
             try
             {
                 handler(msg);
