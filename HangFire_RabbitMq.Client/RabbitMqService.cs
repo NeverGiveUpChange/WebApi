@@ -132,15 +132,15 @@ namespace HangFire_RabbitMq.Client
         /// <param name="queue">队列名称</param>
         /// <param name="routingKey"></param>
         /// <param name="exchangeType">匹配规则</param>
-        /// <param name="isProperties">是否持久化</param>
+        /// <param name="durable">是否持久化</param>
         /// <returns></returns>
-        private static IModel GetModel(string exchange, string queue, string routingKey,string  exchangeType, bool isProperties = false)
+        private static IModel GetModel(string exchange, string queue, string routingKey,string  exchangeType, bool durable = false)
         {
             return ModelDic.GetOrAdd(queue, key =>
             {
                 var model = _conn.CreateModel();
-                ExchangeDeclare(model, exchange, exchangeType, isProperties);
-                QueueDeclare(model, queue, isProperties);
+                ExchangeDeclare(model, exchange, exchangeType, durable);
+                QueueDeclare(model, queue, durable);
                 model.QueueBind(queue, exchange, routingKey);
                 ModelDic[queue] = model;
                 return model;
@@ -151,14 +151,14 @@ namespace HangFire_RabbitMq.Client
         /// 获取Model
         /// </summary>
         /// <param name="queue">队列名称</param>
-        /// <param name="isProperties"></param>
+        /// <param name="durable">是否持久化</param>
         /// <returns></returns>
-        private static IModel GetModel(string queue, bool isProperties = false)
+        private static IModel GetModel(string queue, bool durable = false)
         {
             return ModelDic.GetOrAdd(queue, value =>
             {
                 var model = _conn.CreateModel();
-                QueueDeclare(model, queue, isProperties);
+                QueueDeclare(model, queue, durable);
 
                 //每次消费的消息数
                 model.BasicQos(0, 1, false);
@@ -188,10 +188,10 @@ namespace HangFire_RabbitMq.Client
             var exchange = queueInfo.ExchangeName;
             var queue = queueInfo.QueueName;
             var routingKey = queueInfo.RouteKey;
-            var isProperties = queueInfo.IsProperties;
+            var durable = queueInfo.Durable;
             var exchangeType = GetExchangeTypeString( queueInfo.TypeEnum);
 
-            Publish(exchange, queue, routingKey, body, exchangeType, isProperties);
+            Publish(exchange, queue, routingKey, body, exchangeType, durable);
         }
         private string GetExchangeTypeString(ExchangeTypeEnum typeEnum)
 
@@ -218,10 +218,10 @@ namespace HangFire_RabbitMq.Client
         /// <param name="exchageType">匹配规则</param>
         /// <param name="isProperties">是否持久化</param>
         /// <returns></returns>
-        private void Publish(string exchange, string queue, string routingKey, string body,string exchageType, bool isProperties = false)
+        private void Publish(string exchange, string queue, string routingKey, string body,string exchageType, bool durable = false)
         {
-            var channel = GetModel(exchange, queue, routingKey, exchageType, isProperties);
-                channel.BasicPublish(exchange, routingKey, null, SerializeExtension.SerializeUtf8(body));
+            var channel = GetModel(exchange, queue, routingKey, exchageType, durable);
+                channel.BasicPublish(exchange, routingKey, null, body.StringToBytes());
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace HangFire_RabbitMq.Client
             {
                 Body = body,
                 CreateDateTime = DateTime.Now,
-                ExceptionMsg = ex.GetInnestException().Message,
+                ExceptionMsg = ex.Message,
                 Queue = queue,
                 RoutingKey = deadLetterExchange,
                 Exchange = deadLetterRoutingKey
@@ -269,7 +269,7 @@ namespace HangFire_RabbitMq.Client
 
             var isDeadLetter = typeof(T) == typeof(DeadLetterQueue);
 
-            Subscribe(queueInfo.QueueName, queueInfo.IsProperties, handler, isDeadLetter);
+            Subscribe(queueInfo.QueueName, queueInfo.Durable, handler, isDeadLetter);
         }
 
         /// <summary>
@@ -277,13 +277,13 @@ namespace HangFire_RabbitMq.Client
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="queue">队列名称</param>
-        /// <param name="isProperties"></param>
+        /// <param name="durable">是否持久化</param>
         /// <param name="handler">消费处理</param>
         /// <param name="isDeadLetter"></param>
-        private void Subscribe<T>(string queue, bool isProperties, Action<T> handler, bool isDeadLetter) where T : class
+        private void Subscribe<T>(string queue, bool durable, Action<T> handler, bool isDeadLetter) where T : class
         {
             //队列声明
-            var channel = GetModel(queue, isProperties);
+            var channel = GetModel(queue, durable);
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (model, ea) =>
@@ -331,9 +331,9 @@ namespace HangFire_RabbitMq.Client
         /// 获取消息
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="exchange"></param>
-        /// <param name="queue"></param>
-        /// <param name="routingKey"></param>
+        /// <param name="exchange">交换机</param>
+        /// <param name="queue">队列</param>
+        /// <param name="routingKey">路由规则</param>
         /// <param name="exchangeType">匹配规则</param>
         /// <param name="handler">消费处理</param>
         private void Pull<T>(string exchange, string queue, string routingKey,string exchangeType, Action<T> handler) where T : class

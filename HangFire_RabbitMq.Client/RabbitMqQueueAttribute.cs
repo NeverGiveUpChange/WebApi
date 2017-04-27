@@ -29,7 +29,7 @@ namespace HangFire_RabbitMq.Client
         /// <summary>
         /// 是否持久化
         /// </summary>
-        public bool IsProperties { get; set; }
+        public bool Durable { get; set; }
         /// <summary>
         /// 路由名称
         /// </summary>
