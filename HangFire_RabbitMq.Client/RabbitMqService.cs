@@ -119,6 +119,11 @@ namespace HangFire_RabbitMq.Client
             bool autoDelete = false, IDictionary<string, object> arguments = null)
         {
             queue =string.IsNullOrWhiteSpace( queue)? "UndefinedQueueName" : queue.Trim();
+            #region 设置此队列为缓冲队列，当此队列中有死信时自动进行转发
+            //arguments.Add("x-dead-letter-exchange", "some.exchange.name");
+            //arguments.Add("x-dead-letter-routing-key", "some-routing-key");
+            #endregion
+
             channel.QueueDeclare(queue, durable, exclusive, autoDelete, arguments);
         }
         #endregion
@@ -221,7 +226,12 @@ namespace HangFire_RabbitMq.Client
         private void Publish(string exchange, string queue, string routingKey, string body,string exchageType, bool durable = false)
         {
             var channel = GetModel(exchange, queue, routingKey, exchageType, durable);
-                channel.BasicPublish(exchange, routingKey, null, body.StringToBytes());
+            #region 设置消息的过期时间
+            //IBasicProperties a = channel.CreateBasicProperties();
+            //a.Expiration = "60000";
+            #endregion
+
+            channel.BasicPublish(exchange, routingKey, null, body.StringToBytes());
         }
 
         /// <summary>
