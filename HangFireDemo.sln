@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFire_FluentScheduler", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFire_RabbitMq.Client", "HangFire_RabbitMq.Client\HangFire_RabbitMq.Client.csproj", "{7D8797E9-1866-4043-B512-F5ADA7042A2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFire_CacheManager", "HangFire_CacheManager\HangFire_CacheManager.csproj", "{7724A402-58AD-4461-BDB6-D68751B7B021}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{7D8797E9-1866-4043-B512-F5ADA7042A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D8797E9-1866-4043-B512-F5ADA7042A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D8797E9-1866-4043-B512-F5ADA7042A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7724A402-58AD-4461-BDB6-D68751B7B021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7724A402-58AD-4461-BDB6-D68751B7B021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7724A402-58AD-4461-BDB6-D68751B7B021}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7724A402-58AD-4461-BDB6-D68751B7B021}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
