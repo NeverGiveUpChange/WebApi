@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace HangFire_IRepository
 {
    public interface IDbSession
     {
+        /// <summary>
+        /// 事物开始
+        /// </summary>
+        TransactionScope Begin();
+        /// <summary>
+        /// 事物完成
+        /// </summary>
+        void Complete();
         /// <summary>
         /// 是否立即提交数据库
         /// </summary>

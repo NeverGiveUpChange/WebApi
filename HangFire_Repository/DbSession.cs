@@ -11,8 +11,11 @@ namespace HangFire_Repository
     {
         private readonly HangFire_DevEntities _dbContext;
         private bool _isNotSubmit = false;
+        private TransactionScope _transactionScope;
+   
 
         public bool IsNotSubmit { get => _isNotSubmit; set => _isNotSubmit = value; }
+        public TransactionScope TransactionScope { get => _transactionScope; private set => _transactionScope = value; }
 
         public DbSession(HangFire_DevEntities dbContext)
         {
@@ -31,6 +34,15 @@ namespace HangFire_Repository
                 return null;
             }
         }
+        public TransactionScope Begin()
+        {
+            TransactionScope= new TransactionScope();
+            return TransactionScope;
+        }
+        public void Complete()
+        {
+            TransactionScope.Complete();
+        }
 
         public int ExecuteSqlCommand(string sql, params object[] parameters)
         {
@@ -41,5 +53,7 @@ namespace HangFire_Repository
         {
             return _dbContext.Database.SqlQuery<T>(sql, parameters).ToList<T>();
         }
+
+    
     }
 }
