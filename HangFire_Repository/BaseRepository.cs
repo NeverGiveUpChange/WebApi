@@ -34,7 +34,7 @@ namespace HangFire_Repository
         }
         public IQueryable<T> LoadEntities(Expression<Func<T, bool>> whereLambda)
         {
-            return _dbContext.Set<T>().Where<T>(whereLambda).AsQueryable<T>();
+            return _dbContext.Set<T>().Where<T>(whereLambda);
         }
         public IQueryable<T> LoadPageEntities<K>(int pageIndex, int pageSize, out int totalCount, Expression<Func<T, bool>> whereLambda, bool isAsc, Expression<Func<T, K>> orderByLambda)
         {
@@ -49,7 +49,7 @@ namespace HangFire_Repository
                 tempQueryable.OrderByDescending<T, K>(orderByLambda);
             }
             totalCount = tempQueryable.Count();
-            return tempQueryable.Skip((pageIndex - 1) * pageSize).Take(pageSize).AsQueryable();
+            return tempQueryable.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
         private T PhysicalRemove(T entity)
         {
