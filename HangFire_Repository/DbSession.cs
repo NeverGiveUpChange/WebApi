@@ -49,7 +49,7 @@ namespace HangFire_Repository
 
             return _dbContext.Database.ExecuteSqlCommand(sql, parameters);
         }
-        public List<T> SqlSqlQuery<T>(string sql, params object[] parameters)
+        public List<T> SqlQuery<T>(string sql, params object[] parameters)
         {
             return _dbContext.Database.SqlQuery<T>(sql, parameters).ToList<T>();
         }

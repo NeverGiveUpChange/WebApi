@@ -41,7 +41,7 @@ namespace HangFire_IRepository
         /// <param name="sql">需要执行的sql</param>
         /// <param name="parameters">参数</param>
         /// <returns></returns>
-        List<T> SqlSqlQuery<T>(string sql, params object[] parameters);
+        List<T> SqlQuery<T>(string sql, params object[] parameters);
 
     }
 }
