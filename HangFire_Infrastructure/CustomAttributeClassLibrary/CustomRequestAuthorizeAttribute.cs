@@ -1,7 +1,11 @@
 ﻿using HangFire_Common;
 using System;
+using System.Collections.Specialized;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
@@ -10,75 +14,71 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
 
     public class CustomRequestAuthorizeAttribute : AuthorizeAttribute
     {
-
+        
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            var authorization = actionContext.Request.Headers.Authorization;
-            if (authorization != null && !string.IsNullOrWhiteSpace(authorization.Parameter))
+            //action具有[AllowAnonymous]特性不参与验证
+            if (actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().OfType<AllowAnonymousAttribute>().Any(x => x is AllowAnonymousAttribute))
             {
-                //请求头验证中添加  timestamp，key，sign
-                AuthorizationInfo authorizationInfo = null;
-                try
-                {
-                    authorizationInfo = GetAuthorizationInfo(authorization.Parameter);
-                    if (authorizationInfo == null) {
-                        HandleUnauthorizedRequest(actionContext);
-                    }
-                }
-                catch(Exception  ex)
-                {
-                    HandleUnauthorizedRequest(actionContext);
-
-                }
-                //根据key获取secret
-                var secret = "test";
-                // 检查时间是否过期
-                if (ConvertHelper.ConvertToTimeStmap(DateTime.Now) - long.Parse(authorizationInfo.TimeStamp) > 120)
-                {
-                    HandleUnauthorizedRequest(actionContext);
-                }
-                if ((secret + authorizationInfo.TimeStamp + authorizationInfo.Key).ToMD5Hash() != authorizationInfo.Sign)
-                {
-                    HandleUnauthorizedRequest(actionContext);
-                }
-                else {
-                    base.OnAuthorization(actionContext);
-                }
-                // 使用统一的签名方式进行签名比较生成的sign 是否一样
+                base.OnAuthorization(actionContext);
+                return;
             }
-            else
+            var request = actionContext.Request;
+            string method = request.Method.Method;
+            string timestamp = string.Empty;
+            string expireTime = string.Empty;
+            if (request.Headers.Contains("timesign") && request.Headers.Contains("platformtype"))
             {
-                var attributes = actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().OfType<AllowAnonymousAttribute>();
-                var isAnonymous = attributes.Any(a => a is AllowAnonymousAttribute);
-                if (isAnonymous) base.OnAuthorization(actionContext);
-                else HandleUnauthorizedRequest(actionContext);
+                //根据传过来的平台编号获得对应的私钥 解密得到对应的过期时间
+                timestamp = CommonHelper.RSADecrypt(ConfigurationManager.AppSettings["PlatformPrivateKey_" + request.Headers.GetValues("platformtype").FirstOrDefault()], request.Headers.GetValues("timesign").FirstOrDefault()); ;
             }
+   
 
+            //根据请求类型拼接参数
+            NameValueCollection form = HttpContext.Current.Request.QueryString;
+            string data = string.Empty;
+            switch (method)
+            {
+                case "POST":
+                    
+                    Stream stream = HttpContext.Current.Request.InputStream;
+                    string responseJson = string.Empty;
+                    StreamReader streamReader = new StreamReader(stream);
+                    data = streamReader.ReadToEnd();
+                    timestamp = GetTimeTamp(() => { return data.ConvertObj<dynamic>().timestamp; });
+                    break;
+                case "GET":
+                    timestamp = GetTimeTamp(() => { return form.GetValues("timespan").FirstOrDefault(); });
+                    break;
+                default:
+                    HandleUnauthorizedRequest(actionContext);
+                    return;
+            }
+            //判断timespan是否有效
+            double ts1 = 0;
+            double ts2 = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
+            bool timespanvalidate = double.TryParse(timestamp, out ts1);
+            double ts = ts2 - ts1;
+            bool falg = ts > int.Parse(ConfigurationManager.AppSettings["UrlExpireTime"]) * 1000;
+            if (falg || (!timespanvalidate))
+            {
+                HandleUnauthorizedRequest(actionContext);
+                return;
+            }
+            base.OnAuthorization(actionContext);
         }
-        private AuthorizationInfo GetAuthorizationInfo(string parameter)
+        private string GetTimeTamp(Func<dynamic> getTimesTampFunc)
         {
-            var parameterArray = parameter.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            if (parameterArray.Length < 3 || string.IsNullOrWhiteSpace(parameterArray[0]) || string.IsNullOrWhiteSpace(parameterArray[1]) || string.IsNullOrWhiteSpace(parameterArray[2])) return null;
-            else
+            try
             {
-                var sb = new StringBuilder("{");
-                for (int i = 0; i < parameterArray.Length; i++)
-                {
-                    var item = parameterArray[i].Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
-                    sb.Append("\"" + item[0] + "\"").Append(":").Append("\"" + item[1] + "\"").Append(",");
-                }
-                parameter = sb.ToString().Substring(0, sb.ToString().Length - 1) + "}";
-                return parameter.ConvertObj<AuthorizationInfo>();
+                return getTimesTampFunc();
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
             }
 
         }
     }
-    class AuthorizationInfo
-    {
-        public string TimeStamp { get; set; }
-        public string Key { get; set; }
-        public string Sign { get; set; }
-    }
-
 
 }

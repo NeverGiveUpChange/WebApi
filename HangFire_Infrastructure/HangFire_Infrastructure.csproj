@@ -88,6 +88,7 @@
     <Compile Include="CacheHelper\RedisCacheHelper\RedisZSetCache.cs" />
     <Compile Include="CustomAttributeClassLibrary\CustomExceptionAttribute.cs" />
     <Compile Include="CustomAttributeClassLibrary\CustomRequestAuthorizeAttribute.cs" />
+    <Compile Include="Handlers\CustomerMessageProcesssingHandler.cs" />
     <Compile Include="LogHelper\DatabaseLogger.cs" />
     <Compile Include="LogHelper\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

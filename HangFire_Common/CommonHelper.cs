@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+
 namespace HangFire_Common
 {
     public class CommonHelper
@@ -56,7 +59,15 @@ namespace HangFire_Common
             sb.Append("select @@IDENTITY");
             return sb.ToString();
         }
-    
-       
+        public static string RSADecrypt(string privateKey, string content)
+        {
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            byte[] cipherbytes;
+            rsa.FromXmlString(privateKey);
+            cipherbytes = rsa.Decrypt(Convert.FromBase64String(content), false);
+            return HttpUtility.UrlDecode( Encoding.UTF8.GetString(cipherbytes));
+
+        }
+
     }
 }
