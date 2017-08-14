@@ -32,8 +32,6 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
                 //根据传过来的平台编号获得对应的私钥 解密得到对应的过期时间
                 expireTime = CommonHelper.RSADecrypt(ConfigurationManager.AppSettings["PlatformPrivateKey_" + request.Headers.GetValues("platformtype").FirstOrDefault()], request.Headers.GetValues("timesign").FirstOrDefault()); ;
             }
-   
-
             //根据请求类型拼接参数
             NameValueCollection form = HttpContext.Current.Request.QueryString;
             string data = string.Empty;
