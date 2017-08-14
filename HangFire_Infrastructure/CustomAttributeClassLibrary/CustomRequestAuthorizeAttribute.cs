@@ -26,11 +26,11 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
             var request = actionContext.Request;
             string method = request.Method.Method;
             string timestamp = string.Empty;
-            string expireTime = string.Empty;
+            string expireTime = ConfigurationManager.AppSettings["UrlExpireTime"];
             if (request.Headers.Contains("timesign") && request.Headers.Contains("platformtype"))
             {
                 //根据传过来的平台编号获得对应的私钥 解密得到对应的过期时间
-                timestamp = CommonHelper.RSADecrypt(ConfigurationManager.AppSettings["PlatformPrivateKey_" + request.Headers.GetValues("platformtype").FirstOrDefault()], request.Headers.GetValues("timesign").FirstOrDefault()); ;
+                expireTime = CommonHelper.RSADecrypt(ConfigurationManager.AppSettings["PlatformPrivateKey_" + request.Headers.GetValues("platformtype").FirstOrDefault()], request.Headers.GetValues("timesign").FirstOrDefault()); ;
             }
    
 
@@ -48,18 +48,22 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
                     timestamp = GetTimeTamp(() => { return data.ConvertObj<dynamic>().timestamp; });
                     break;
                 case "GET":
-                    timestamp = GetTimeTamp(() => { return form.GetValues("timespan").FirstOrDefault(); });
+                    timestamp = GetTimeTamp(() => { return form.GetValues("timestamp").FirstOrDefault(); });
                     break;
                 default:
                     HandleUnauthorizedRequest(actionContext);
                     return;
+            }
+            if (string.IsNullOrWhiteSpace(timestamp)) {
+                HandleUnauthorizedRequest(actionContext);
+                return;
             }
             //判断timespan是否有效
             double ts1 = 0;
             double ts2 = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
             bool timespanvalidate = double.TryParse(timestamp, out ts1);
             double ts = ts2 - ts1;
-            bool falg = ts > int.Parse(ConfigurationManager.AppSettings["UrlExpireTime"]) * 1000;
+            bool falg = ts > int.Parse(expireTime) * 1000;
             if (falg || (!timespanvalidate))
             {
                 HandleUnauthorizedRequest(actionContext);

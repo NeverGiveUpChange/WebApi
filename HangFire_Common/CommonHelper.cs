@@ -64,8 +64,8 @@ namespace HangFire_Common
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
             byte[] cipherbytes;
             rsa.FromXmlString(privateKey);
-            cipherbytes = rsa.Decrypt(Convert.FromBase64String(content), false);
-            return HttpUtility.UrlDecode( Encoding.UTF8.GetString(cipherbytes));
+            cipherbytes = rsa.Decrypt(Convert.FromBase64String(HttpUtility.UrlDecode(content)), false);
+            return  Encoding.UTF8.GetString(cipherbytes);
 
         }
 

@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace HangFireApi.Controllers
 {
-    public class ValuesController : ApiController
+    public class ValuesController : BaseApiController
     {
         // GET api/values
         public IEnumerable<string> Get()
@@ -16,24 +16,31 @@ namespace HangFireApi.Controllers
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public string GetFromNotObj(int id)
         {
             return "value";
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public void PostFromObj([FromBody]Tenmp temp)
         {
+            var aa = "";
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        public void GetFromObjTest([FromBody]Tenmp temp)
         {
+            var bb = "";
         }
 
         // DELETE api/values/5
         public void Delete(int id)
         {
         }
+    }
+    public class Tenmp
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

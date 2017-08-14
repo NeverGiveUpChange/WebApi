@@ -1,4 +1,5 @@
 ﻿using HangFire_Infrastructure.CustomAttributeClassLibrary;
+using HangFire_Infrastructure.Handlers;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,10 @@ namespace HangFireApi
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.MessageHandlers.Add(new CustomerMessageProcesssingHandler());
             config.Filters.Add(new CustomExceptionAttribute());
-       
 
+   
         }
     }
 }
