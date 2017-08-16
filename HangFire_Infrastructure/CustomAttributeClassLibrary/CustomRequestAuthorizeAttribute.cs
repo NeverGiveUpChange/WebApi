@@ -1,9 +1,12 @@
 ﻿using HangFire_Common;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Web;
 using System.Web.Http;
@@ -67,7 +70,20 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
                 HandleUnauthorizedRequest(actionContext);
                 return;
             }
-            base.OnAuthorization(actionContext);
+            base.IsAuthorized(actionContext);
+        }
+        protected override void HandleUnauthorizedRequest(HttpActionContext filterContext)
+        {
+            base.HandleUnauthorizedRequest(filterContext);
+
+            var response = filterContext.Response = filterContext.Response ?? new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.Forbidden;
+            var content = new
+            {
+                BusinessStatus = -10403,
+                StatusMessage = "服务端拒绝访问"
+            };
+            response.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
         }
         private string GetTimeTamp(Func<dynamic> getTimesTampFunc)
         {
