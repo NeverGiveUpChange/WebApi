@@ -17,7 +17,7 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
 
     public class CustomRequestAuthorizeAttribute : AuthorizeAttribute
     {
-        
+
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             //action具有[AllowAnonymous]特性不参与验证
@@ -27,45 +27,30 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
                 return;
             }
             var request = actionContext.Request;
-            string method = request.Method.Method;
-            string timestamp = string.Empty;
-            string expireTime = ConfigurationManager.AppSettings["UrlExpireTime"];
-            if (request.Headers.Contains("timesign") && request.Headers.Contains("platformtype"))
+            string method = request.Method.Method, timeStamp = string.Empty, expireyTime = ConfigurationManager.AppSettings["UrlExpireTime"], timeSign = string.Empty, platformType = string.Empty;
+            if (!request.Headers.Contains("timesign") || !request.Headers.Contains("platformtype") || !request.Headers.Contains("timestamp") || !request.Headers.Contains("expiretime"))
             {
-                //根据传过来的平台编号获得对应的私钥 解密得到对应的过期时间
-                expireTime = CommonHelper.RSADecrypt(ConfigurationManager.AppSettings["PlatformPrivateKey_" + request.Headers.GetValues("platformtype").FirstOrDefault()], request.Headers.GetValues("timesign").FirstOrDefault()); ;
-            }
-            //根据请求类型拼接参数
-            NameValueCollection form = HttpContext.Current.Request.QueryString;
-            string data = string.Empty;
-            switch (method)
-            {
-                case "POST":
-                    
-                    Stream stream = HttpContext.Current.Request.InputStream;
-                    string responseJson = string.Empty;
-                    StreamReader streamReader = new StreamReader(stream);
-                    data = streamReader.ReadToEnd();
-                    timestamp = GetTimeTamp(() => { return data.ConvertObj<dynamic>().timestamp; });
-                    break;
-                case "GET":
-                    timestamp = GetTimeTamp(() => { return form.GetValues("timestamp").FirstOrDefault(); });
-                    break;
-                default:
-                    HandleUnauthorizedRequest(actionContext);
-                    return;
-            }
-            if (string.IsNullOrWhiteSpace(timestamp)) {
                 HandleUnauthorizedRequest(actionContext);
                 return;
             }
+            platformType = request.Headers.GetValues("platformtype").FirstOrDefault();
+            timeSign = request.Headers.GetValues("timesign").FirstOrDefault();
+            timeStamp = request.Headers.GetValues("timestamp").FirstOrDefault();
+            var tempExpireyTime = request.Headers.GetValues("expiretime").FirstOrDefault();
+            string privateKey = Encoding.UTF8.GetString(Convert.FromBase64String(ConfigurationManager.AppSettings[$"PlatformPrivateKey_{platformType}"]));
+            if (!SignValidate(tempExpireyTime, privateKey, timeStamp, timeSign))
+            {
+                HandleUnauthorizedRequest(actionContext);
+                return;
+            }
+            if (tempExpireyTime != "0")
+            {
+                expireyTime = tempExpireyTime;
+            }
             //判断timespan是否有效
-            double ts1 = 0;
-            double ts2 = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
-            bool timespanvalidate = double.TryParse(timestamp, out ts1);
-            double ts = ts2 - ts1;
-            bool falg = ts > int.Parse(expireTime) * 1000;
-            if (falg || (!timespanvalidate))
+            double ts2 = ConvertHelper.ToDouble((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds, 2), ts = ts2 - ConvertHelper.ToDouble(timeStamp);
+            bool falg = ts > int.Parse(expireyTime) * 1000;
+            if (falg)
             {
                 HandleUnauthorizedRequest(actionContext);
                 return;
@@ -85,17 +70,15 @@ namespace HangFire_Infrastructure.CustomAttributeClassLibrary
             };
             response.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
         }
-        private string GetTimeTamp(Func<dynamic> getTimesTampFunc)
+        private bool SignValidate(string expiryTime, string privateKey, string timestamp, string sign)
         {
-            try
+            bool isValidate = false;
+            var tempSign = CommonHelper.RSADecrypt(privateKey, sign);
+            if (CommonHelper.EncryptSHA256($"expiretime{expiryTime}" + $"timestamp{timestamp}") == tempSign)
             {
-                return getTimesTampFunc();
+                isValidate = true;
             }
-            catch (Exception ex)
-            {
-                return string.Empty;
-            }
-
+            return isValidate;
         }
     }
 

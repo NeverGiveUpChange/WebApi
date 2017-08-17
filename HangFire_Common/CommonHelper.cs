@@ -65,8 +65,29 @@ namespace HangFire_Common
             byte[] cipherbytes;
             rsa.FromXmlString(privateKey);
             cipherbytes = rsa.Decrypt(Convert.FromBase64String(HttpUtility.UrlDecode(content)), false);
-            return  Encoding.UTF8.GetString(cipherbytes);
+            return Encoding.UTF8.GetString(cipherbytes);
 
+        }
+        public static string EncryptSHA256(string strSrc)
+        {
+            byte[] sourceByte = Encoding.UTF8.GetBytes(strSrc);
+            SHA256 sha256 = new SHA256CryptoServiceProvider();
+            byte[] cryByte = sha256.ComputeHash(sourceByte);
+            return ByteToHexStr(cryByte);
+        }
+
+        //将数组转换成16进制字符串
+        private static string ByteToHexStr(byte[] bytes)
+        {
+            string returnStr = "";
+            if (bytes != null)
+            {
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    returnStr += bytes[i].ToString("X2");
+                }
+            }
+            return returnStr.ToLower();
         }
 
     }
